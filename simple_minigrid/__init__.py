@@ -63,6 +63,14 @@ def register_minigrid_envs():
         kwargs={"size": 8, "num_objects": 4, "num_object_classes": 2},
     )
 
+    # Reward Four Rooms
+    # ----------------------------------------
+    register(
+        id="SimpleMiniGrid-RewardFourRooms-v0",
+        entry_point="simple_minigrid.envs:RewardFourRoomsEnv",
+        kwargs={"num_objects": 9, "num_object_classes": 3},
+    )
+
 
 register_minigrid_envs()
 
