@@ -5,8 +5,8 @@ requires = ["setuptools >= 61.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "minigrid"
-description = "Minimalistic gridworld reinforcement learning environments."
+name = "simple-minigrid"
+description = "A simplified MiniGrid environment for reinforcement learning"
 readme = "README.md"
 requires-python = ">= 3.8"
 authors = [{ name = "Farama Foundation", email = "contact@farama.org" }]
@@ -41,7 +41,7 @@ Documentation = "https://minigrid.farama.org/"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-include = ["minigrid*"]
+include = ["simple_minigrid*"]
 
 # Linters and Test tools #######################################################
 
@@ -51,11 +51,11 @@ include = ["minigrid*"]
 atomic = true
 profile = "black"
 append_only = true
-src_paths = ["minigrid", "tests"]
+src_paths = ["simple-minigrid", "tests"]
 add_imports = ["from __future__ import annotations"]
 
 [tool.pyright]
-include = ["minigrid/**"]
+include = ["simple-minigrid/**"]
 
 exclude = ["**/node_modules", "**/__pycache__"]
 

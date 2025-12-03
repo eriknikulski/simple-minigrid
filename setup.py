@@ -10,8 +10,8 @@ CWD = pathlib.Path(__file__).absolute().parent
 
 
 def get_version():
-    """Gets the minigrid version."""
-    path = CWD / "minigrid" / "__init__.py"
+    """Gets the simple-minigrid version."""
+    path = CWD / "simple_minigrid" / "__init__.py"
     content = path.read_text()
 
     for line in content.splitlines():
@@ -35,4 +35,4 @@ def get_description():
     return long_description
 
 
-setup(name="minigrid", version=get_version(), long_description=get_description())
+setup(name="simple-minigrid", version=get_version(), long_description=get_description())
