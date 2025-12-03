@@ -106,7 +106,7 @@ class ActionBonus(gym.Wrapper):
         obs, reward, terminated, truncated, info = self.env.step(action)
 
         env = self.unwrapped
-        tup = (tuple(env.agent_pos), env.agent_dir, action)
+        tup = (tuple(env.agent_pos), action)
 
         # Get the count for this (s,a) pair
         pre_count = 0
@@ -194,7 +194,7 @@ class ImgObsWrapper(ObservationWrapper):
         >>> env = gym.make("SimpleMiniGrid-Empty-5x5-v0")
         >>> obs, _ = env.reset()
         >>> obs.keys()
-        dict_keys(['image', 'direction', 'mission'])
+        dict_keys(['image', 'mission'])
         >>> env = ImgObsWrapper(env)
         >>> obs, _ = env.reset()
         >>> obs.shape
@@ -420,7 +420,7 @@ class FullyObsWrapper(ObservationWrapper):
         env = self.unwrapped
         full_grid = env.grid.encode()
         full_grid[env.agent_pos[0]][env.agent_pos[1]] = np.array(
-            [OBJECT_TO_IDX["agent"], COLOR_TO_IDX["red"], env.agent_dir]
+            [OBJECT_TO_IDX["agent"], COLOR_TO_IDX["red"]]
         )
 
         return {**obs, "image": full_grid}
@@ -464,7 +464,6 @@ class DictObservationSpaceWrapper(ObservationWrapper):
         self.observation_space = spaces.Dict(
             {
                 "image": env.observation_space["image"],
-                "direction": spaces.Discrete(4),
                 "mission": spaces.MultiDiscrete(
                     [len(self.word_dict.keys())] * max_words_in_mission
                 ),

@@ -63,15 +63,10 @@ class ManualControl:
             return
 
         key_to_action = {
-            "left": Actions.left,
             "right": Actions.right,
-            "up": Actions.forward,
-            "space": Actions.toggle,
-            "pageup": Actions.pickup,
-            "pagedown": Actions.drop,
-            "tab": Actions.pickup,
-            "left shift": Actions.drop,
-            "enter": Actions.done,
+            "down": Actions.down,
+            "left": Actions.left,
+            "up": Actions.up,
         }
         if key in key_to_action.keys():
             action = key_to_action[key]
@@ -89,7 +84,7 @@ if __name__ == "__main__":
         type=str,
         help="gym environment to load",
         choices=gym.envs.registry.keys(),
-        default="SimpleMiniGrid-MultiRoom-N6-v0",
+        default="SimpleMiniGrid-Empty-5x5-v0",
     )
     parser.add_argument(
         "--seed",
@@ -128,12 +123,6 @@ if __name__ == "__main__":
         agent_view_size=args.agent_view_size,
         screen_size=args.screen_size,
     )
-
-    # TODO: check if this can be removed
-    if args.agent_view:
-        print("Using agent view")
-        env = RGBImgPartialObsWrapper(env, args.tile_size)
-        env = ImgObsWrapper(env)
 
     manual_control = ManualControl(env, seed=args.seed)
     manual_control.start()

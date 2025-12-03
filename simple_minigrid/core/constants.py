@@ -45,7 +45,7 @@ STATE_TO_IDX = {
     "locked": 2,
 }
 
-# Map of agent direction indices to vectors
+# Map of direction indices to vectors
 DIR_TO_VEC = [
     # Pointing right (positive X)
     np.array((1, 0)),

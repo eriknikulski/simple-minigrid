@@ -13,7 +13,7 @@ from simple_minigrid.utils.rendering import (
     highlight_img,
     point_in_rect,
     point_in_triangle,
-    rotate_fn,
+    rotate_fn, point_in_circle,
 )
 
 
@@ -146,7 +146,7 @@ class Grid:
     def render_tile(
         cls,
         obj: WorldObj | None,
-        agent_dir: int | None = None,
+        agent: bool | None = None,
         highlight: bool = False,
         tile_size: int = TILE_PIXELS,
         subdivs: int = 3,
@@ -156,7 +156,7 @@ class Grid:
         """
 
         # Hash map lookup key for the cache
-        key: tuple[Any, ...] = (agent_dir, highlight, tile_size)
+        key: tuple[Any, ...] = (agent, highlight, tile_size)
         key = obj.encode() + key if obj else key
 
         if key in cls.tile_cache:
@@ -174,16 +174,9 @@ class Grid:
             obj.render(img)
 
         # Overlay the agent on top
-        if agent_dir is not None:
-            tri_fn = point_in_triangle(
-                (0.12, 0.19),
-                (0.87, 0.50),
-                (0.12, 0.81),
-            )
-
-            # Rotate the agent based on its direction
-            tri_fn = rotate_fn(tri_fn, cx=0.5, cy=0.5, theta=0.5 * math.pi * agent_dir)
-            fill_coords(img, tri_fn, (255, 0, 0))
+        if agent:
+            circle_fn = point_in_circle(0.5, 0.5, 0.4)
+            fill_coords(img, circle_fn, (255, 0, 0))
 
         # Highlight the cell if needed
         if highlight:
@@ -201,7 +194,6 @@ class Grid:
         self,
         tile_size: int,
         agent_pos: tuple[int, int],
-        agent_dir: int | None = None,
         highlight_mask: np.ndarray | None = None,
     ) -> np.ndarray:
         """
@@ -228,7 +220,7 @@ class Grid:
                 assert highlight_mask is not None
                 tile_img = Grid.render_tile(
                     cell,
-                    agent_dir=agent_dir if agent_here else None,
+                    agent=agent_here,
                     highlight=highlight_mask[i, j],
                     tile_size=tile_size,
                 )

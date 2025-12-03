@@ -5,7 +5,6 @@ from gymnasium.envs.registration import register
 from simple_minigrid import simple_minigrid_env, wrappers
 from simple_minigrid.core import roomgrid
 from simple_minigrid.core.world_object import Wall
-from simple_minigrid.envs.wfc.config import WFC_PRESETS, register_wfc_presets
 
 __version__ = "2.5.0"
 

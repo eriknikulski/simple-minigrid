@@ -176,7 +176,6 @@ class RoomGrid(SimpleMiniGridEnv):
                 (self.num_rows // 2) * (self.room_size - 1) + (self.room_size // 2),
             )
         )
-        self.agent_dir = 0
 
     def place_in_room(
         self, i: int, j: int, obj: WorldObj
@@ -311,7 +310,7 @@ class RoomGrid(SimpleMiniGridEnv):
         neighbor.doors[(wall_idx + 2) % 4] = True
 
     def place_agent(
-        self, i: int | None = None, j: int | None = None, rand_dir: bool = True
+        self, i: int | None = None, j: int | None = None
     ) -> np.ndarray:
         """
         Place the agent in a room
@@ -326,7 +325,7 @@ class RoomGrid(SimpleMiniGridEnv):
 
         # Find a position that is not right in front of an object
         while True:
-            super().place_agent(room.top, room.size, rand_dir, max_tries=1000)
+            super().place_agent(room.top, room.size, max_tries=1000)
             front_cell = self.grid.get(*self.front_pos)
             if front_cell is None or front_cell.type == "wall":
                 break

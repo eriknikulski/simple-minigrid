@@ -69,12 +69,10 @@ class EmptyEnv(SimpleMiniGridEnv):
         self,
         size=8,
         agent_start_pos=(1, 1),
-        agent_start_dir=0,
         max_steps: int | None = None,
         **kwargs,
     ):
         self.agent_start_pos = agent_start_pos
-        self.agent_start_dir = agent_start_dir
 
         mission_space = MissionSpace(mission_func=self._gen_mission)
 
@@ -107,7 +105,6 @@ class EmptyEnv(SimpleMiniGridEnv):
         # Place the agent
         if self.agent_start_pos is not None:
             self.agent_pos = self.agent_start_pos
-            self.agent_dir = self.agent_start_dir
         else:
             self.place_agent()
 

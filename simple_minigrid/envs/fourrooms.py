@@ -113,8 +113,6 @@ class FourRoomsEnv(SimpleMiniGridEnv):
         if self._agent_default_pos is not None:
             self.agent_pos = self._agent_default_pos
             self.grid.set(*self._agent_default_pos, None)
-            # assuming random start direction
-            self.agent_dir = self._rand_int(0, 4)
         else:
             self.place_agent()
 
