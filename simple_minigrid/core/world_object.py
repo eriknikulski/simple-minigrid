@@ -16,6 +16,7 @@ from simple_minigrid.utils.rendering import (
     point_in_circle,
     point_in_line,
     point_in_rect,
+    point_in_diamond,
 )
 
 if TYPE_CHECKING:
@@ -96,6 +97,8 @@ class WorldObj:
             v = Goal()
         elif obj_type == "lava":
             v = Lava()
+        elif "reward_object" in obj_type:
+            v = RewardObject(obj_class=int(obj_type.removeprefix("reward_object")))
         else:
             assert False, "unknown object type in decode '%s'" % obj_type
 
@@ -291,3 +294,24 @@ class Box(WorldObj):
         # Replace the box by its contents
         env.grid.set(pos[0], pos[1], self.contains)
         return True
+
+
+class RewardObject(WorldObj):
+    """
+    Colored reward object the agent can walk over and collect a reward.
+    """
+
+    def __init__(self, obj_class: int, reward: float) -> None:
+        assert 0 <= obj_class < 10
+
+        super().__init__(f'reward_object_{obj_class}', f'rc{obj_class}')
+
+        self.obj_class = obj_class
+        self.reward = reward
+
+    def can_overlap(self) -> bool:
+        return True
+
+    def render(self, img) -> None:
+        color = COLORS[self.color] / 1.5
+        fill_coords(img, point_in_diamond(0.5, 0.5, 0.45), color)

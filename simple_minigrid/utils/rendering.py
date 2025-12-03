@@ -95,6 +95,13 @@ def point_in_rect(xmin, xmax, ymin, ymax):
     return fn
 
 
+def point_in_diamond(cx, cy, d):
+    def fn(x, y):
+        return abs(x - cx) + abs(y - cy) <= d
+
+    return fn
+
+
 def point_in_triangle(a, b, c):
     a = np.array(a, dtype=np.float32)
     b = np.array(b, dtype=np.float32)

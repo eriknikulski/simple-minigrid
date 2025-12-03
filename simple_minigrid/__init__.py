@@ -48,6 +48,21 @@ def register_minigrid_envs():
         kwargs={"size": 16},
     )
 
+    # Reward
+    # ----------------------------------------
+
+    register(
+        id="SimpleMiniGrid-Reward-5x5-v0",
+        entry_point="simple_minigrid.envs:RewardEnv",
+        kwargs={"size": 5, "num_objects": 2, "num_object_classes": 2},
+    )
+
+    register(
+        id="SimpleMiniGrid-Reward-8x8-v0",
+        entry_point="simple_minigrid.envs:RewardEnv",
+        kwargs={"size": 8, "num_objects": 4, "num_object_classes": 2},
+    )
+
 
 register_minigrid_envs()
 

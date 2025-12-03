@@ -84,7 +84,7 @@ if __name__ == "__main__":
         type=str,
         help="gym environment to load",
         choices=gym.envs.registry.keys(),
-        default="SimpleMiniGrid-Empty-5x5-v0",
+        default="SimpleMiniGrid-Reward-8x8-v0",
     )
     parser.add_argument(
         "--seed",

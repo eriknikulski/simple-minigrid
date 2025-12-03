@@ -16,7 +16,7 @@ from simple_minigrid.core.actions import Actions
 from simple_minigrid.core.constants import COLOR_NAMES, DIR_TO_VEC, TILE_PIXELS
 from simple_minigrid.core.grid import Grid
 from simple_minigrid.core.mission import MissionSpace
-from simple_minigrid.core.world_object import Point, WorldObj
+from simple_minigrid.core.world_object import Point, WorldObj, RewardObject
 
 T = TypeVar("T")
 
@@ -498,6 +498,10 @@ class SimpleMiniGridEnv(gym.Env):
                 reward += self._reward()
             if  fwd_cell.type == 'lava':
                 terminated = True
+            if isinstance(fwd_cell, RewardObject):
+                reward += fwd_cell.reward
+                self.grid.set(*fwd_pos, None)
+                del fwd_cell
 
         if self.step_count >= self.max_steps:
             truncated = True
