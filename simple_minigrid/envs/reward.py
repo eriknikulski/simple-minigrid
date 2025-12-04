@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import Optional, Any
 
 import numpy as np
+from gymnasium.core import ObsType
 
 from simple_minigrid.core.grid import Grid
 from simple_minigrid.core.mission import MissionSpace
@@ -73,7 +74,7 @@ class RewardEnv(SimpleMiniGridEnv):
         self.agent_start_pos = agent_start_pos
         self.num_objects = num_objects
         self.num_object_classes = num_object_classes if num_object_classes is not None else num_objects
-        self.rewards = self.np_random.uniform(low=-1, high=1, size=self.num_object_classes)
+        self.rewards = None
 
         mission_space = MissionSpace(mission_func=self._gen_mission)
 
@@ -147,3 +148,16 @@ class RewardEnv(SimpleMiniGridEnv):
         self.place_reward_objs(width, height, avoid=np.array([[*self.agent_pos], [*goal_pos]]))
 
         self.mission = "get to the green goal square"
+
+    def reset(
+        self,
+        *,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[ObsType, dict[str, Any]]:
+        # call gym.Env .reset() to set seed
+        super(SimpleMiniGridEnv, self).reset(seed=seed)
+        # set rewards
+        self.rewards = self.np_random.uniform(low=-1, high=1, size=self.num_object_classes)
+        # call SimpleMiniGridEnv .reset() to do the rest
+        return super().reset(seed=seed)
