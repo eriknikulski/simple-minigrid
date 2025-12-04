@@ -73,7 +73,7 @@ class RewardEnv(SimpleMiniGridEnv):
         self.agent_start_pos = agent_start_pos
         self.num_objects = num_objects
         self.num_object_classes = num_object_classes if num_object_classes is not None else num_objects
-        self.rewards = None
+        self.rewards = self.np_random.uniform(low=-1, high=1, size=self.num_object_classes)
 
         mission_space = MissionSpace(mission_func=self._gen_mission)
 
@@ -118,8 +118,6 @@ class RewardEnv(SimpleMiniGridEnv):
             avoid=avoid,
             rng=self.np_random,
         )
-
-        self.rewards = self.np_random.uniform(low=-1, high=1, size=self.num_object_classes)
 
         for obj_class in range(self.num_object_classes):
             for i in range(obj_per_class):
